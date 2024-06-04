@@ -56,13 +56,10 @@
             gap: 5px;
         }
 
-        .input-group input[type="range"] {
+        .input-group input[type="number"] {
             width: 100%;
-        }
-
-        .slider-value {
-            text-align: center;
-            font-weight: bold;
+            padding: 8px;
+            box-sizing: border-box;
         }
 
         .helper-note {
@@ -92,32 +89,27 @@
                 <form id="roiForm">
                     <div class="input-group">
                         <label for="adSpend">Ad Spend Recommendation</label>
-                        <input type="range" id="adSpend" min="0" max="10000" value="500" step="10">
-                        <div class="slider-value" id="adSpendValue">$500</div>
+                        <input type="number" id="adSpend" min="0" value="500" step="10">
                         <div class="helper-note">The total amount you plan to spend on ads.</div>
                     </div>
                     <div class="input-group">
                         <label for="averageCPM">Average CPM (Cost to Reach 1000 Targeted People)</label>
-                        <input type="range" id="averageCPM" min="0" max="100" value="20" step="0.01">
-                        <div class="slider-value" id="averageCPMValue">$20.00</div>
+                        <input type="number" id="averageCPM" min="0" value="20" step="0.01">
                         <div class="helper-note">The cost to reach 1000 targeted people.</div>
                     </div>
                     <div class="input-group">
                         <label for="costPerLandingPageView">Cost Per Landing Page View</label>
-                        <input type="range" id="costPerLandingPageView" min="0" max="10" value="1" step="0.01">
-                        <div class="slider-value" id="costPerLandingPageViewValue">$1.00</div>
+                        <input type="number" id="costPerLandingPageView" min="0" value="1" step="0.01">
                         <div class="helper-note">The cost for each landing page view.</div>
                     </div>
                     <div class="input-group">
                         <label for="checkoutPageConversionRate">Checkout Page Conversion Rate (%)</label>
-                        <input type="range" id="checkoutPageConversionRate" min="0" max="100" value="3" step="0.1">
-                        <div class="slider-value" id="checkoutPageConversionRateValue">3%</div>
+                        <input type="number" id="checkoutPageConversionRate" min="0" max="100" value="3" step="0.1">
                         <div class="helper-note">The percentage of visitors who convert on the checkout page.</div>
                     </div>
                     <div class="input-group">
                         <label for="averageOrderValue">Average Order Value</label>
-                        <input type="range" id="averageOrderValue" min="0" max="1000" value="97" step="1">
-                        <div class="slider-value" id="averageOrderValueValue">$97</div>
+                        <input type="number" id="averageOrderValue" min="0" value="97" step="1">
                         <div class="helper-note">The average value of an order.</div>
                     </div>
                 </form>
@@ -162,17 +154,10 @@
                 $('#projectedSales').text(projectedSales.toFixed(2));
                 $('#projectedRevenue').text('$' + projectedRevenue.toFixed(2));
                 $('#projectedROAS').text(projectedROAS.toFixed(2));
-
-                // Update slider value displays
-                $('#adSpendValue').text('$' + adSpend.toFixed(2));
-                $('#averageCPMValue').text('$' + averageCPM.toFixed(2));
-                $('#costPerLandingPageViewValue').text('$' + costPerLandingPageView.toFixed(2));
-                $('#checkoutPageConversionRateValue').text(checkoutPageConversionRate.toFixed(2) + '%');
-                $('#averageOrderValueValue').text('$' + averageOrderValue.toFixed(2));
             }
 
             // Bind calculateROI to the input event of each input field
-            $('input[type="range"]').on('input', calculateROI);
+            $('input[type="number"]').on('input', calculateROI);
 
             // Initial calculation
             calculateROI();
