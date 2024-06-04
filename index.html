@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Spend ROI Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        .result-container {
+            width: 100%;
+            max-width: 600px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form id="roiForm">
+                <div class="input-group">
+                    <label for="adSpend">Ad Spend Recommendation</label>
+                    <input type="number" id="adSpend" min="0" value="500" step="10">
+                </div>
+                <div class="input-group">
+                    <label for="averageCPM">Average CPM (Cost to Reach 1000 Targeted People)</label>
+                    <input type="number" id="averageCPM" min="0" value="20" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label for="projectedAudienceReach">Projected Audience Reach</label>
+                    <input type="number" id="projectedAudienceReach" min="0" value="25000" step="100">
+                </div>
+                <div class="input-group">
+                    <label for="costPerLandingPageView">Cost Per Landing Page View</label>
+                    <input type="number" id="costPerLandingPageView" min="0" value="1" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label for="numberOfLandingPageViews">Number of Landing Page Views</label>
+                    <input type="number" id="numberOfLandingPageViews" min="0" value="500" step="10">
+                </div>
+                <div class="input-group">
+                    <label for="checkoutPageConversionRate">Checkout Page Conversion Rate (%)</label>
+                    <input type="number" id="checkoutPageConversionRate" min="0" value="3" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="averageOrderValue">Average Order Value</label>
+                    <input type="number" id="averageOrderValue" min="0" value="97" step="1">
+                </div>
+            </form>
+        </div>
+        <div class="result-container">
+            <div class="result">
+                <p>Projected Sales: <span id="projectedSales">0</span></p>
+                <p>Projected Revenue: <span id="projectedRevenue">$0</span></p>
+                <p>Projected ROAS: <span id="projectedROAS">0</span></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            // Function to calculate and display ROI metrics
+            function calculateROI() {
+                let adSpend = parseFloat($('#adSpend').val());
+                let averageCPM = parseFloat($('#averageCPM').val());
+                let projectedAudienceReach = parseInt($('#projectedAudienceReach').val());
+                let costPerLandingPageView = parseFloat($('#costPerLandingPageView').val());
+                let numberOfLandingPageViews = parseInt($('#numberOfLandingPageViews').val());
+                let checkoutPageConversionRate = parseFloat($('#checkoutPageConversionRate').val());
+                let averageOrderValue = parseFloat($('#averageOrderValue').val());
+
+                // Calculate projected sales, revenue, and ROAS
+                let projectedSales = numberOfLandingPageViews * (checkoutPageConversionRate / 100);
+                let projectedRevenue = projectedSales * averageOrderValue;
+                let projectedROAS = projectedRevenue / adSpend;
+
+                // Update the DOM with calculated values
+                $('#projectedSales').text(projectedSales.toFixed(2));
+                $('#projectedRevenue').text('$' + projectedRevenue.toFixed(2));
+                $('#projectedROAS').text(projectedROAS.toFixed(2));
+            }
+
+            // Bind calculateROI to the input event of each input field
+            $('input').on('input', calculateROI);
+
+            // Initial calculation
+            calculateROI();
+        });
+    </script>
+</body>
+</html>
